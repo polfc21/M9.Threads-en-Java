@@ -1,4 +1,4 @@
-package com.nivell1.fase1;
+package com.nivell1;
 
 import javax.swing.*;
 
