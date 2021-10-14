@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Rocket {
 
-    private String id;
-    private List<Propulsor> propulsors;
+    private final String id;
+    private final List<Propulsor> propulsors;
 
     public Rocket(String id) {
         this.id = id;
@@ -17,17 +17,32 @@ public class Rocket {
         this.propulsors.add(propulsor);
     }
 
-    @Override
-    public String toString() {
-        return "Rocket id=" + id +
-                "\nPotència Màxima propulsors: [" + getPropulsorsString() ;
+    public int getSizePropulsors(){
+        return this.propulsors.size();
     }
 
-    private String getPropulsorsString() {
-        String propulsorsString = "";
-        for (Propulsor propulsor : this.propulsors) {
-            propulsorsString += propulsor.getMaxPower() + " ";
-        }
-        return propulsorsString + "]";
+    public void toBrake(int propulsor){
+        this.propulsors.get(propulsor-1).decrementActualPower();
     }
+
+    public void accelerate(int propulsor){
+        this.propulsors.get(propulsor-1).incrementActualPower();
+    }
+    public void startRace() {
+        for (Propulsor propulsor : this.propulsors) {
+            new Thread(propulsor).start();
+        }
+    }
+    public void finishRace() {
+        for (Propulsor propulsor : this.propulsors) {
+            propulsor.finish();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Coet [id=" + id +", propulsors=" + propulsors + "]";
+    }
+
+
 }
